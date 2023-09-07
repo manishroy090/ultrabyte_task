@@ -81,8 +81,8 @@
 
 
                     @empty
-                    <tr>
-                        <td colspan="8" id="norec" class="border border-black text-center py-8">
+                    <tr id="norec">
+                        <td colspan="8" class="border border-black text-center py-8">
                             "no Records Founds"
                         </td>
 
@@ -152,6 +152,7 @@
                 success: function(response) {
                     $('#titleerror').html(' ');
                     $('#imgerror').html(' ');
+                    $('#norec').hide();
                     if ($('#update').val() == "add") {
                         var tr = `<tr id="row_${response.createdData.id}" class="border border-black"><td class="px-8 border border-black">${response.index}</td>
                         <td id="tittle_${response.createdData.id}" class="px-8 border border-black">${response.createdData.tittle}</td><td class="px-8 py-4 border border-black">
@@ -162,7 +163,7 @@
                         </tr>`;
                         tbody.append(tr);
 
-                        formReset();
+
 
                     }
 
@@ -170,8 +171,10 @@
                         $('#tittle_' + response.id).html(response.updatedData.tittle);
                         $('#rowimg_' + response.id).removeAttr('src');
                         $('#rowimg_' + response.id).attr('src', response.updatedData.img);
-                        formReset();
+                        $('#update').val('add');
+
                     }
+                    formReset();
                     swal("Sucessfully!", 'Page  ' + response.action, 'success')
 
                 },
@@ -210,7 +213,7 @@
                 success: function(response) {
                     $('#title').val(response.tittle);
                     $('#slug').val(response.slug);
-                    $('#uploadsvg').remove();
+                    $('#uploadsvg').hide();
                     $('#imgupdiv').removeClass("justify-center items-center ");
                     $('#showimg').attr('src', response.img);
                     $('#showimg').show();
